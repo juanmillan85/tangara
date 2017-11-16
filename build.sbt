@@ -1,9 +1,11 @@
+import sbt.Keys._
+
 enablePlugins(AutomateHeaderPlugin)
 headerLicense := Some(HeaderLicense.ALv2("2017", "Juan David Millan-Cifuentes"))
-organization := "com.mentor.labs"
-name := "tangara"
-version := "0.1"
-scalaVersion := "2.12.3"
+organization in ThisBuild := "com.mentor.labs"
+name in ThisBuild := "tangara"
+version in ThisBuild := "0.1"
+scalaVersion in ThisBuild := "2.12.2"
 
 //lazy val compileScalastyle = taskKey[Unit]("compileScalastyle")
 //
@@ -36,38 +38,48 @@ scalaVersion := "2.12.3"
 //
 //buildSettings ++ baseSettings
 
-lazy val compilerOptions = Seq(
-  "-deprecation",
-  "-encoding",
-  "UTF-8",
-  "-feature",
-  "-language:existentials",
-  "-language:higherKinds",
-  "-unchecked",
-  "-Xfatal-warnings",
-  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
-  "-Xfuture"
-)
-
-val Http4sVersion  = "0.17.5"
-val LogbackVersion = "1.2.3"
-
+//lazy val compilerOptions = Seq(
+//  "-deprecation",
+//  "-encoding",
+//  "UTF-8",
+//  "-feature",
+//  "-language:existentials",
+//  "-language:higherKinds",
+//  "-unchecked",
+//  "-Xfatal-warnings",
+//  "-Yno-adapted-args",
+//  "-Ywarn-dead-code",
+//  "-Ywarn-numeric-widen",
+//  "-Xfuture"
+//)
 // Only necessary for SNAPSHOT releases
+
 resolvers += Resolver.sonatypeRepo("snapshots")
+
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
-libraryDependencies ++= Seq(
-  "org.http4s"     %% "http4s-blaze-server" % Http4sVersion,
-  "org.http4s"     %% "http4s-circe"        % Http4sVersion,
-  "org.http4s"     %% "http4s-dsl"          % Http4sVersion,
-  "ch.qos.logback" % "logback-classic"      % LogbackVersion,
-  "io.circe"       %% "circe-generic"       % "0.8.0",
-  // Optional for string interpolation to JSON model
-  "io.circe" %% "circe-literal" % "0.8.0"
-)
+val compileSettings = Seq(libraryDependencies ++= Dependencies.compile)
 
+val nlu = project
+  .in(file("nlu"))
+  .settings(name := "tangara")
+  .settings(compileSettings)
+  .settings(libraryDependencies ++= Dependencies.testCompile)
+
+val examples = project
+  .in(file("examples"))
+  .settings(name := "tangara")
+  .settings(compileSettings)
+  .settings(libraryDependencies ++= Seq(Dependencies.ScalaTest))
+
+val root = project
+  .in(file("."))
+  .settings(name := "tangara")
+  .aggregate(nlu, examples)
+
+
+//  .settings(libraryDependencies += Dependencies.ScalaTest)
+//  .settings(sharedPublishSettings: _*)
 //addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 
 enablePlugins(JavaAppPackaging)
