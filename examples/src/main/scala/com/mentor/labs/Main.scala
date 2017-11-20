@@ -1,4 +1,5 @@
-package com.mentor.labs;
+package com.mentor.labs
+
 import fs2.{Stream, Task}
 import io.circe.generic.auto._
 import io.circe.syntax._
@@ -19,7 +20,7 @@ object Main extends StreamApp {
         user <- req.as(jsonOf[User])
         // Encode a hello response
         resp <- Ok(Hello(user.name).asJson)
-      } yield (resp)
+      } yield resp
     case GET -> Root =>
       Ok("Your webapp tangara is ready!")
   }
