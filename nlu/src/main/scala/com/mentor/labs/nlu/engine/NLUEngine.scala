@@ -1,6 +1,5 @@
 package com.mentor.labs.nlu.engine
 
-
 import fs2.Task
 
 import scala.language.higherKinds
@@ -18,8 +17,8 @@ trait NLUEngine[A <: Query] {
 
   def resourceName(id: String): String
 
-  def parse(query: A): Reader[WebClient, Task[B]] = Reader {
-    (webClient: WebClient) => webClient.post(query)(resourceName(query.id))(encoder, decoder)
+  def parse(query: A): Reader[WebClient, Task[B]] = Reader { (webClient: WebClient) =>
+    webClient.post(query)(resourceName(query.id))(encoder, decoder)
   }
 }
 
@@ -28,7 +27,6 @@ object NLUEngine {
   trait Query {
     def id: String = ""
   }
-
 }
 
 object NLUEngineSyntax {

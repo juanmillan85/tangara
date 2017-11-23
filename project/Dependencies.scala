@@ -20,6 +20,7 @@ object Dependencies {
   val AkkaHttp: ModuleID = "com.typesafe.akka" %% "akka-http" % Versions.AkkaHttp
   lazy val AkkaStream: ModuleID = "com.typesafe.akka" %% "akka-stream" % Versions.Akka
   lazy val AkkaTestkit: ModuleID = "com.typesafe.akka" %% "akka-testkit" % Versions.Akka
+  lazy val AkkaActor: ModuleID = "com.typesafe.akka" %% "akka-actor" % Versions.Akka
 
   val Cats: ModuleID = "org.typelevel" %% "cats" % Versions.Cats
 
@@ -51,6 +52,8 @@ object Dependencies {
   val WirewMock: ModuleID = "com.github.tomakehurst" % "wiremock" % Versions.WiremockVersion % "test"
 
   val compile: Seq[ModuleID] = Seq(TypesafeConfig, Logback) ++ HTTP4S ++ Circe
+
+  val compileAkka: Seq[ModuleID] = Seq(AkkaHttp, AkkaStream, AkkaTestkit, AkkaActor, AkkaHttpCirce, TypesafeConfig, Logback) ++ HTTP4S ++ Circe
 
   val testCompile = Seq(ScalaTest, WirewMock)
 }

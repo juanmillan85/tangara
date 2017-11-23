@@ -11,7 +11,6 @@ package object clients {
 
   class Http4SClient extends WebClient {
 
-
     import io.circe._
     import io.circe.syntax._
     import org.http4s.Uri

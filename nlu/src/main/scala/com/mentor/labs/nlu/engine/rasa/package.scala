@@ -8,11 +8,7 @@ import io.circe.generic.extras.semiauto._
 
 package object rasa {
   implicit val config: Configuration = Configuration.default.withSnakeCaseKeys.withDefaults
-  private val setting = ConfigFactory.load()
-
-  private val Port = setting.getInt("nlu.port")
-  private val Host = setting.getString("nlu.host")
-  val URL: String = s"http://$Host:$Port"
+  private val setting                = ConfigFactory.load()
 
   case class RasaNluQuery(q: String) extends Query
 
@@ -22,9 +18,12 @@ package object rasa {
 
   implicit val entity: Decoder[Entity] = deriveDecoder[Entity]
 
-
   implicit val rasaNLUEngine = new NLUEngine[RasaNluQuery] {
     type B = RasaNluAnswer
+
+    private val Port = setting.getInt("nlu.port")
+    private val Host = setting.getString("nlu.host")
+    val URL: String  = s"http://$Host:$Port"
 
     def resourceName(id: String) = s"$URL/parse"
 
@@ -45,13 +44,17 @@ package object rasa {
 
   case class Intent(confidence: Double, name: String)
 
-  implicit val slot: Decoder[Slot] = deriveDecoder[Slot]
-  implicit val intent: Decoder[Intent] = deriveDecoder[Intent]
+  implicit val slot: Decoder[Slot]       = deriveDecoder[Slot]
+  implicit val intent: Decoder[Intent]   = deriveDecoder[Intent]
   implicit val message: Decoder[Message] = deriveDecoder[Message]
   implicit val tracker: Decoder[Tracker] = deriveDecoder[Tracker]
 
   implicit val rasaCoreParse = new NLUEngine[RasaCoreQuery] {
     type B = RasaCoreAnswer
+
+    private val Port = setting.getInt("rasa_core.port")
+    private val Host = setting.getString("rasa_core.host")
+    val URL: String  = s"http://$Host:$Port"
 
     def resourceName(id: String) = s"$URL/conversations/$id/parse"
 
@@ -68,11 +71,14 @@ package object rasa {
 
   implicit val eventStringValue: Encoder[EventString] = deriveEncoder[EventString]
 
-
-  case class RasaCoreContinue(override val id: String = "default", executedAction: String, events: Seq[EventString]) extends Query
+  case class RasaCoreContinue(override val id: String = "default", executedAction: String, events: Seq[EventString])
+      extends Query
 
   implicit val rasaCoreEvents = new NLUEngine[RasaCoreContinue] {
     type B = RasaCoreAnswer
+    private val Port = setting.getInt("rasa_core.port")
+    private val Host = setting.getString("rasa_core.host")
+    val URL: String  = s"http://$Host:$Port"
 
     def resourceName(id: String) = s"$URL/conversations/$id/continue"
 
@@ -80,6 +86,5 @@ package object rasa {
 
     def decoder: Decoder[RasaCoreAnswer] = deriveDecoder[RasaCoreAnswer]
   }
-
 
 }

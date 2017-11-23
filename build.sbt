@@ -12,23 +12,27 @@ resolvers += Resolver.sonatypeRepo("snapshots")
 
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
-val compileSettings = Seq(libraryDependencies ++= Dependencies.compile)
-
 val nlu = project
   .in(file("nlu"))
-  .settings(name := "tangara")
-  .settings(compileSettings)
+  .settings(name := "nlu")
+  .settings(libraryDependencies ++= Dependencies.compile)
   .settings(libraryDependencies ++= Dependencies.testCompile)
+
+val `quiz-service` = project
+  .in(file("quiz-service"))
+  .settings(name := "quiz-service")
+  .settings(libraryDependencies ++= Dependencies.compileAkka)
+  .settings(libraryDependencies ++= Seq(Dependencies.ScalaTest))
 
 val examples = project
   .in(file("examples"))
-  .settings(name := "tangara")
-  .settings(compileSettings)
+  .settings(name := "examples")
+  .settings(libraryDependencies ++= Dependencies.compile)
   .settings(libraryDependencies ++= Seq(Dependencies.ScalaTest))
 
 val root = project
   .in(file("."))
   .settings(name := "tangara")
-  .aggregate(nlu, examples)
+  .aggregate(nlu, examples, `quiz-service`)
 
 enablePlugins(JavaAppPackaging)

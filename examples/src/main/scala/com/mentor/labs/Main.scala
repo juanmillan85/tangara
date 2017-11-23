@@ -14,9 +14,9 @@ object Main extends StreamApp {
   private[this] val logger = org.log4s.getLogger
 
   val jsonService = HttpService {
-    case req@POST -> Root / "hello" =>
+    case req @ POST -> Root / "hello" =>
       for {
-      // Decode a User request
+        // Decode a User request
         user <- req.as(jsonOf[User])
         // Encode a hello response
         resp <- Ok(Hello(user.name).asJson)
