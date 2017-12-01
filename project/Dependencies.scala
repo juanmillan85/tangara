@@ -15,6 +15,7 @@ object Dependencies {
     val Http4S = "0.17.5"
     val WiremockVersion = "2.8.0"
     val TypesafeConfig = "1.3.1"
+    val ScalaMockVersion = "3.5.0"
   }
 
   val AkkaHttp: ModuleID = "com.typesafe.akka" %% "akka-http" % Versions.AkkaHttp
@@ -48,12 +49,13 @@ object Dependencies {
     "org.http4s" %% "http4s-circe").map(_ % Versions.Http4S)
 
   val TypesafeConfig: ModuleID = "com.typesafe" % "config" % Versions.TypesafeConfig
-
-  val WirewMock: ModuleID = "com.github.tomakehurst" % "wiremock" % Versions.WiremockVersion % "test"
+  val ScalaMock: ModuleID = "org.scalamock" %% "scalamock-scalatest-support" % Versions.ScalaMockVersion % Test
+  val WirewMock: ModuleID = "com.github.tomakehurst" % "wiremock" % Versions.WiremockVersion % Test
 
   val compile: Seq[ModuleID] = Seq(TypesafeConfig, Logback) ++ HTTP4S ++ Circe
 
   val compileAkka: Seq[ModuleID] = Seq(AkkaHttp, AkkaStream, AkkaTestkit, AkkaActor, AkkaHttpCirce, TypesafeConfig, Logback) ++ HTTP4S ++ Circe
 
-  val testCompile = Seq(ScalaTest, WirewMock)
+  val testCompile: Seq[ModuleID] = Seq(ScalaTest, ScalaMock)
+  val integrationTest: Seq[ModuleID] = testCompile ++ Seq(WirewMock)
 }

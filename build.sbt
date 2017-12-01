@@ -16,19 +16,19 @@ val nlu = project
   .in(file("nlu"))
   .settings(name := "nlu")
   .settings(libraryDependencies ++= Dependencies.compile)
-  .settings(libraryDependencies ++= Dependencies.testCompile)
+  .settings(libraryDependencies ++= Dependencies.integrationTest)
 
 val `quiz-service` = project
   .in(file("quiz-service"))
   .settings(name := "quiz-service")
   .settings(libraryDependencies ++= Dependencies.compileAkka)
-  .settings(libraryDependencies ++= Seq(Dependencies.ScalaTest))
+  .settings(libraryDependencies ++= Dependencies.testCompile)
 
 val examples = project
   .in(file("examples"))
   .settings(name := "examples")
   .settings(libraryDependencies ++= Dependencies.compile)
-  .settings(libraryDependencies ++= Seq(Dependencies.ScalaTest))
+  .settings(libraryDependencies ++= Dependencies.testCompile)
 
 val root = project
   .in(file("."))
