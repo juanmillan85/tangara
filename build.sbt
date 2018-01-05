@@ -12,6 +12,8 @@ resolvers += Resolver.sonatypeRepo("snapshots")
 
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
+resolvers += Resolver.jcenterRepo
+
 val nlu = project
   .in(file("nlu"))
   .settings(name := "nlu")

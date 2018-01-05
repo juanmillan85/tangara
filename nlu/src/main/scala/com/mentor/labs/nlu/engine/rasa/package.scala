@@ -2,7 +2,7 @@ package com.mentor.labs.nlu.engine
 
 import com.mentor.labs.nlu.engine.NLUEngine.Query
 import com.typesafe.config.ConfigFactory
-import io.circe.{Decoder, Encoder}
+import io.circe.{ Decoder, Encoder }
 import io.circe.generic.extras._
 import io.circe.generic.extras.semiauto._
 

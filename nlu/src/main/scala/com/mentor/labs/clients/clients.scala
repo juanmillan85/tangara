@@ -1,7 +1,7 @@
 package com.mentor.labs
 
 import fs2.Task
-import io.circe.{Decoder, Encoder}
+import io.circe.{ Decoder, Encoder }
 
 package object clients {
 

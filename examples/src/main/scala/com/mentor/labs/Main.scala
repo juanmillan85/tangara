@@ -1,6 +1,6 @@
 package com.mentor.labs
 
-import fs2.{Stream, Task}
+import fs2.{ Stream, Task }
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s._

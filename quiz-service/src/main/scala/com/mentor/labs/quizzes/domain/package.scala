@@ -1,6 +1,6 @@
 package com.mentor.labs.quizzes
 
-import shapeless.{:+:, CNil}
+import shapeless.{ :+:, CNil }
 
 package object domain {
 
@@ -9,10 +9,10 @@ package object domain {
   sealed trait QuestionType
 
   case class SimpleQuestionType(id: Long, title: String, answers: Seq[Answer], correct: Answer, topics: String)
-    extends QuestionType
+      extends QuestionType
 
   case class MultiValueQuestionType(id: Long, title: String, answers: Seq[Answer], correct: Seq[Answer])
-    extends QuestionType
+      extends QuestionType
 
   type Question = SimpleQuestionType :+: MultiValueQuestionType :+: CNil
 
@@ -24,7 +24,14 @@ package object domain {
 
   case class EvaluatedQuestion(questionId: Long, score: Double)
 
-  case class Quiz(quizId: Long, userId: Long, quizTemplateId: Option[Long], startTime: String, finishedTime: Option[String],
-                  questions: Seq[Question], evaluatedQuestions: Seq[EvaluatedQuestion], status: Int, score: Double)
+  case class Quiz(quizId: Long,
+                  userId: Long,
+                  quizTemplateId: Option[Long],
+                  startTime: String,
+                  finishedTime: Option[String],
+                  questions: Seq[Question],
+                  evaluatedQuestions: Seq[EvaluatedQuestion],
+                  status: Int,
+                  score: Double)
 
 }

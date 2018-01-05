@@ -16,13 +16,15 @@ object Dependencies {
     val WiremockVersion = "2.8.0"
     val TypesafeConfig = "1.3.1"
     val ScalaMockVersion = "3.5.0"
+    val AkkaHttpJson = "1.18.1"
   }
 
   val AkkaHttp: ModuleID = "com.typesafe.akka" %% "akka-http" % Versions.AkkaHttp
   lazy val AkkaStream: ModuleID = "com.typesafe.akka" %% "akka-stream" % Versions.Akka
   lazy val AkkaTestkit: ModuleID = "com.typesafe.akka" %% "akka-testkit" % Versions.Akka
   lazy val AkkaActor: ModuleID = "com.typesafe.akka" %% "akka-actor" % Versions.Akka
-
+  lazy val AkkaPersistance: ModuleID = "com.typesafe.akka" %% "akka-persistence" % Versions.Akka
+  lazy val AkkaPersistanceQuery: ModuleID = "com.typesafe.akka" %% "akka-persistence-query-experimental" % Versions.Akka
   val Cats: ModuleID = "org.typelevel" %% "cats" % Versions.Cats
 
   val Circe: Seq[ModuleID] = Seq(
@@ -34,9 +36,13 @@ object Dependencies {
     "io.circe" %% "circe-literal"
   ).map(_ % Versions.Circe)
 
+
+  val AkkaMultiNodeTestkit: ModuleID = "com.typesafe.akka" %% "akka-multi-node-testkit" % Versions.Akka
+
+  val AkkaPersistanceInMemory: ModuleID = "com.github.dnvriend" %% "akka-persistence-inmemory" % "2.5.1.1"
   val PureConfig: ModuleID = "com.github.pureconfig" %% "pureconfig" % Versions.PureConfig
   val AkkaHttpCirce: ModuleID = "de.heikoseeberger" %% "akka-http-circe" % Versions.AkkaHttpCirce
-  private val ScalaTestBase = "org.scalatest" %% "scalatest" % Versions.ScalaTest
+  val ScalaTestBase: ModuleID = "org.scalatest" %% "scalatest" % Versions.ScalaTest
   val ScalaTest: ModuleID = ScalaTestBase % "test"
   val ScalaTestIt: ModuleID = ScalaTestBase % "it"
   val ScalaLogging: ModuleID = "com.typesafe.scala-logging" %% "scala-logging" % Versions.ScalaLogging
@@ -54,7 +60,8 @@ object Dependencies {
 
   val compile: Seq[ModuleID] = Seq(TypesafeConfig, Logback) ++ HTTP4S ++ Circe
 
-  val compileAkka: Seq[ModuleID] = Seq(AkkaHttp, AkkaStream, AkkaTestkit, AkkaActor, AkkaHttpCirce, TypesafeConfig, Logback) ++ HTTP4S ++ Circe
+  val compileAkka: Seq[ModuleID] = Seq(AkkaHttp, AkkaStream, AkkaTestkit, AkkaActor,
+    AkkaHttpCirce, AkkaPersistance, TypesafeConfig, Logback, AkkaPersistanceInMemory, AkkaMultiNodeTestkit) ++ Circe
 
   val testCompile: Seq[ModuleID] = Seq(ScalaTest, ScalaMock)
   val integrationTest: Seq[ModuleID] = testCompile ++ Seq(WirewMock)
